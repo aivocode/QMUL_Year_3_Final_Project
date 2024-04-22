@@ -1,0 +1,44 @@
+############################################################################
+These are libraries that were imported, some of them were not used or 
+I forgot what they were used for.
+
+asgiref==3.3.4
+autopep8==1.5.7
+crispy-bootstrap5==0.3.1
+dj-database-url==0.5.0
+Django==3.2.2
+django-crispy-forms==1.11.2
+django-nested-admin==3.3.3
+django-widget-tweaks==1.4.8
+djangorestframework==3.12.4
+gunicorn==20.1.0
+jsonfield==3.1.0
+Pillow==8.2.0
+psycopg2==2.8.6
+pycodestyle==2.7.0
+python-monkey-business==1.0.0
+pytz==2020.1
+six==1.15.0
+sqlparse==0.3.1
+toml==0.10.2
+whitenoise==5.2.0
+
+#############################################################################
+Also, via CDN import:
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js" integrity="sha512-HfRdzrvve5p31VKjxBhIaDhBqreRXt4SX3i3Iv7bhuoeJY47gJtFTRWKUpjk8RUkLtKZUhf87ONcKONAROhvIw==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.3/pretty-checkbox.min.css" integrity="sha512-kz4Ae66pquz4nVE5ytJyKfPDkQyHSggaDtT1v8oLfOd8bB+ZgZXNLaxex99MNu4fdCsWmi58mhLtfGk5RgfcOw==" crossorigin="anonymous" />
+
+
+#############################################################################
+Everything else was coded by me (no major functionality libraries for use cases were used, only helper ones), 
+I have linked references in Project Report when I used online tutorials.
+
+There were also standard imports from Python/Django libraries, they can be seen on top lines of .py files.

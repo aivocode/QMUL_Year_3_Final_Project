@@ -1,0 +1,70 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Courses{% endblock %}
+{% block employer_courses %}active{% endblock %}
+
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Courses</h1>
+    <div class="small text-muted mb-5">View or select to add/edit training courses below.</div>
+</div>
+
+<div class="col text-center mb-4">
+    <a class="btn btn-dark" href="{% url 'ttfjobs:employer_course_create' %}">Create</a>
+</div>
+
+{% if courses %}
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 three-bg border-0 mb-4">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Created courses</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-smaller text-center">
+                            <td>Title</td>
+                            <td>Interests</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr class="bebas-neue text-center">
+                            <td class="border-0">{{ course.title }}</td>
+                            <td class="border-0">
+                                {% if course.interests.exists %}
+                                    {{ course.interests.all|join:", " }}
+                                {% else %}
+                                    None
+                                {% endif %}
+                            </td>
+                            <td class="border-0"><a class="btn btn-dark btn-sm" href="{% url 'ttfjobs:employer_course_update' course.pk %}">Edit</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center mb-0" role="alert">No courses created.</div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

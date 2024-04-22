@@ -1,0 +1,136 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Chat{% endblock %}
+{% block employer_chat %}active{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Chat</h1>
+    <div class="small text-muted mb-5">Find and select affiliated candidates to chat.</div>
+</div>
+
+
+{% if candidates %}
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Find candidates</small>
+        </div>
+        <div class="card-body">
+            <form class="form crispy-form" method="GET">
+                {{form|crispy}}
+                <button type="submit" class="btn btn-dark">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Candidates</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-tiny">
+                            <td>Picture</td>
+                            <td>First&nbsp;name</td>
+                            <td>Last&nbsp;name</td>
+                            <td>Email</td>
+                            <td>Interests</td>
+                            <td>Action</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for candidate in candidates %}
+                        <tr class="bebas-neue font-smaller">
+                            <td class="border-0"><img class="small-img rounded" src="{{candidate.picture.url}}" /></td>
+                            <td class="border-0">{{ candidate.user.first_name }}</td>
+                            <td class="border-0">{{ candidate.user.last_name }}</td>
+                            <td class="border-0">{{ candidate.user.email }}</td>
+                            <td class="border-0">{{ candidate.interests.all|join:", " }}</td>
+                            <td class="border-0">
+                                {% new_messages_count request.user candidate.user as messages_received %}
+                                {% if messages_received %}
+                                <a href="{% url 'ttfjobs:employer_chat_messages_view' candidate.user.id %}"
+                                    class="btn btn-dark btn-sm">
+                                    View&nbsp;<span class="two">{{ messages_received }}</span>
+                                </a>
+                                {% else %}
+                                <a href="{% url 'ttfjobs:employer_chat_messages_view' candidate.user.id %}"
+                                    class="btn btn-dark btn-sm">View</a>
+                                {% endif %}
+                            </td>
+                            <td class="border-0 border-special">
+                                <a class="btn btn-dark btn-sm"
+                                    href="{% url 'ttfjobs:employer_chat_message_create' candidate.user.pk %}">Create</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if sent_messages %}
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 three-bg border-0 mb-4">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Sent messages</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-tiny">
+                            <td>Subject</td>
+                            <td>Message</td>
+                            <td>Sent at</td>
+                            <td>Sent to</td>
+                            <td>Action</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in sent_messages %}
+                        <tr class="bebas-neue font-smaller">
+                            <td class="border-0">{{ message.subject|truncatewords_html:8 }}</th>
+                            <td class="border-0">{{ message.message|truncatewords_html:8 }}</td>
+                            <td class="border-0">{{ message.created_at }}</td>
+                            <td class="border-0">{{ message.receiver.first_name }}&nbsp;{{ message.receiver.last_name }}
+                            </td>
+                            <td class="border-0"><a class="btn btn-dark btn-sm"
+                                    href="{% url 'ttfjobs:delete_message' message.id %}">Hide</a></td>
+                            <td class="border-0"><a class="btn btn-dark btn-sm" href="{% url 'ttfjobs:employer_chat_message_view' message.id %}">View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center mb-0" role="alert">No sent messages.</div>
+</div>
+{% endif %}
+
+<div class="col text-center">
+    <a class="btn btn-dark" href="{% url 'ttfjobs:employer_chat_archive' %}" class="btn btn-primary">Archive</a>
+</div>
+
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center" role="alert">No assigned candidates yet.</div>
+</div>
+{% endif %}
+
+{% endblock %}

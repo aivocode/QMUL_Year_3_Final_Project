@@ -1,0 +1,88 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Candidates Tests Results{% endblock %}
+{% block employer_candidates %}active{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Results</h1>
+    <div class="small text-muted mb-5">View tests results from - {{ candidate.user.get_full_name }}</div>
+</div>
+
+<div class="col text-center mb-4">
+    <a class="btn btn-dark" href="{% url 'ttfjobs:employer_candidates' %}" role="button">Back</a>
+</div>
+
+{% if submitted_tests %}
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Submitted tests</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-tiny">
+                            <td>Title</td>
+                            <td>Description</td>
+                            <td>Score</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for test in submitted_tests %}
+                        <tr class="bebas-neue font-smaller">
+                            <td class="border-0">{{ test.test.title }}</td>
+                            <td class="border-0">{{ test.test.short_description}}</td>
+                            <td class="border-0">{{ test.get_score }}</td>
+                            <td class="border-0"><a href="{% url 'ttfjobs:employer_test_submitted_data' candidate.pk test.id %}" class="btn btn-dark btn-sm">View answers</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center" role="alert">No submitted tests yet.</div>
+</div>
+{% endif %}
+
+{% if awaiting_tests %}
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Pending tests</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-tiny">
+                            <td>Title</td>
+                            <td>Description</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for test in awaiting_tests %}
+                        <tr class="bebas-neue font-smaller">
+                            <td class="border-0">{{ test.title }}</td>
+                            <td class="border-0">{{ test.short_description}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center" role="alert">No pending tests yet.</div>
+</div>
+{% endif %}
+
+{% endblock %}

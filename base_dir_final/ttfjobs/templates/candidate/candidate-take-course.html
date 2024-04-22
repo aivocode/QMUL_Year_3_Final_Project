@@ -1,0 +1,80 @@
+{% extends 'guest/base.html' %}
+{% block title %}Candidate Take Course{% endblock %}
+{% block candidate_courses %}active{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Course</h1>
+    <div class="small text-muted mb-5">Read the course to learn.</div>
+</div>
+
+<div class="col text-center mb-4">
+    <a class="btn btn-dark" href="{% url 'ttfjobs:candidate_courses' %}" role="button">Leave</a>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-75 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Course title: {{ course.title }}</small>
+        </div>
+        <div class="card-body">
+            <div class="card p-0 border-0">
+                <div class="card-body course-page page-1">{{ course.page_one }}</div>
+                <div class="card-body course-page page-2 d-none">{{ course.page_two }}</div>
+                <div class="card-body course-page page-3 d-none">{{ course.page_three }}</div>
+                <div class="card-body course-page page-4 d-none">{{ course.page_four }}</div>
+                <div class="card-body course-page page-5 d-none">{{ course.page_five }}</div>
+            </div>
+            <div class="col text-center">
+                <button type="button" class="btn btn-dark previous-page d-none mt-3">Previous Page</button>
+                <button type="button" class="btn btn-dark next-page mt-3">Next Page</button>
+                <form class="form crispy-form course-submit-form d-none p-0" method="POST" action=".">
+                    {% csrf_token %}
+                    <input class="btn btn-dark" type="submit" value="Finish">
+                    <a class="btn btn-dark" href="{% url 'ttfjobs:candidate_take_course' course.id %}">Refresh</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+    var all_pages = $('.course-page');
+    var current_page_number = 1;
+
+    $(".next-page").click(function () {
+        $('.page-' + current_page_number).addClass('d-none');
+        current_page_number += 1;
+
+        if (current_page_number > 1) {
+            $('.previous-page').removeClass('d-none');
+        }
+
+        if (current_page_number > 5) {
+            $('.course-submit-form').removeClass('d-none');
+            $('.next-page').addClass('d-none');
+            $('.previous-page').addClass('d-none');
+        }
+
+        $('.page-' + current_page_number).removeClass('d-none');
+
+    })
+
+    $(".previous-page").click(function () {
+        $('.page-' + current_page_number).addClass('d-none');
+        current_page_number -= 1;
+
+        if (current_page_number === 1) {
+            $('.previous-page').addClass('d-none');
+        }
+
+        $('.page-' + current_page_number).removeClass('d-none');
+    })
+
+</script>
+{% endblock javascript %}

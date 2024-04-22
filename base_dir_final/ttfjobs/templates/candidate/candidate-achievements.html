@@ -1,0 +1,129 @@
+{% extends 'guest/base.html' %}
+{% block title %}Candidate Achievements{% endblock %}
+{% block candidate_achievements %}active{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Achievements</h1>
+    <div class="small text-muted mb-5">View your earned level, achievements list and scores.</div>
+</div>
+
+<div class="row justify-content-md-center mb-4">
+    <div class="card border-0 w-50 p-0">
+        <div class="card-header bg-dark one bebas-neue text-center h4">
+            Your level: {{ request.user.candidateprofile.get_level_number }}
+        </div>
+        <div class="card-body three-bg p-5">
+            <div class="progress">
+                <div 
+                class="progress-bar progress-bar-striped bg-info progress-bar-animated" 
+                role="progressbar" 
+                style="width: {{ request.user.candidateprofile.get_progress_percentage }}%" 
+                aria-valuenow="{{ request.user.candidateprofile.get_level_number }}" aria-valuemin="0" aria-valuemax="10"></div>
+            </div>
+        </div>
+        <div class="card-footer bebas-neue text-center small bg-dark one">
+            Your total score: {{ request.user.candidateprofile.get_total_score }}
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">My trophies</small>
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div class="card-body pb-2">
+                    {% if request.user.candidateprofile.is_test_taken %}
+                        <div class="alert w-100 one-bg h4 border border-dark border-2 mb-2"><i class="fas fa-trophy"></i>Award: You took a first test</div>
+                    {% endif %}
+
+                    {% if request.user.candidateprofile.is_progress_halfway_through %}
+                    <div class="alert w-100 one-bg h4 border border-dark border-2 mb-2"><i class="fas fa-trophy"></i>Award: Halfway through your tests</div>
+                    {% endif %}
+
+                    {% if request.user.candidateprofile.is_course_taken %}
+                    <div class="alert w-100 one-bg h4 border border-dark border-2 mb-2"><i class="fas fa-trophy"></i>Award: You took a first course</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if submitted_tests %}
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 three-bg border-0 mb-4">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Submitted tests</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-smaller text-center">
+                            <td>Title</td>
+                            <td>Description</td>
+                            <td>Score</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for test in submitted_tests %}
+                        <tr class="bebas-neue text-center">
+                            <td class="border-0">{{ test.test.title }}</td>
+                            <td class="border-0">{{ test.test.short_description }}</td>
+                            <td class="border-0">{{ test.get_score }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center mb-0" role="alert">No submitted tests.</div>
+</div>
+{% endif %}
+
+{% if submitted_courses %}
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 three-bg border-0 mb-4">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Submitted courses</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-smaller text-center">
+                            <td>Title</td>
+                            <td>Description</td>
+                            <td>Date completed</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in submitted_courses %}
+                        <tr class="bebas-neue text-center">
+                            <td class="border-0">{{ course.course.title }}</td>
+                            <td class="border-0">{{ course.course.short_description }}</td>
+                            <td class="border-0">{{ course.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center mb-0" role="alert">No submitted tests.</div>
+</div>
+{% endif %}
+
+{% endblock %}

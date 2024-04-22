@@ -1,0 +1,32 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Profile Edit{% endblock %}
+{% block employer_profile %}active{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Profile</h1>
+    <div class="small text-muted mb-5">Employers: change your profile details below.</div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 three-bg">
+        <div class="card-body">
+            <form class="form crispy-form" enctype="multipart/form-data" method="POST"
+                action="{% url 'ttfjobs:employer_profile_edit' %}">
+                <div class="text-sm">
+                    {{user_edit_form|crispy}}
+                    {{employer_profile_form|crispy}}
+                </div>
+                <input class="btn btn-dark" type="submit" value="Submit">
+                <a class="btn btn-dark" href="{% url 'ttfjobs:employer_profile' %}" role="button">Back</a>
+            </form>
+        </div>
+        <div class="card-footer bg-dark text-center">
+            <small class="text-muted bebas-neue">All fields are optional.</small>
+        </div>
+    </div>
+
+    {% endblock %}

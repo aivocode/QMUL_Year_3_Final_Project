@@ -1,0 +1,49 @@
+{% extends 'guest/base.html' %}
+{% block title %}Candidate Courses{% endblock %}
+{% block candidate_courses %}active{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Courses</h1>
+    <div class="small text-muted mb-5">Select courses to participate below.</div>
+</div>
+
+{% if assigned_courses %}
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 three-bg border-0 mb-4">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Available courses</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-smaller text-center">
+                            <td>Subject</td>
+                            <td>Description</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in assigned_courses %}
+                        <tr class="bebas-neue text-center">
+                            <td class="border-0">{{ course.title }}</td>
+                            <td class="border-0">{{ course.short_description }}</td>
+                            <td class="border-0"><a href="{% url 'ttfjobs:candidate_take_course' course.id %}" class="btn btn-dark">Take a course</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center mb-0" role="alert">No available courses.</div>
+</div>
+{% endif %}
+
+{% endblock %}

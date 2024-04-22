@@ -1,0 +1,177 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+<title>TTFjobs | {% block title %}{% endblock %}</title>
+
+<style>
+html {height: 100%;}
+body {
+    height: 100%;
+    margin: 0;
+    background:linear-gradient(288deg, #FFB6B9 0%, #FFB6B9 35%, #FAE3D9 calc(35% + 1px), #FAE3D9 45%, #BBDED6 calc(45% + 1px), #BBDED6 65%, #61C0BF calc(65% + 1px), #61C0BF 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.bg-primary.bg-login {background-color: #1fcecb !important;}
+a.bg-primary.bg-login:hover {background-color: #1fcecb !important; filter: brightness(.8);}
+.bg-primary.bg-register {background-color: #fc6c85 !important;}
+a.bg-primary.bg-register:hover {background-color: #fc6c85 !important; filter: brightness(.8);}
+
+.edit:hover {filter: brightness(.8);}
+.edit {margin-bottom: -1px;}
+
+.crispy-form label, .bebas-neue, .btn {font-family: 'Bebas Neue', cursive;}
+.crispy-form small {font-size: x-small; color: #212529 !important;}
+.crispy-form ul{list-style: none; padding-left: 0;}
+
+#referral_code {color: #1fcecb !important;}
+
+.one {color: #1fcecb !important;}
+.two {color: #fc6c85 !important;}
+.three {color: #FAE3D9 !important;}
+
+.one-border {border-color: #1fcecb !important;}
+.three-bg {background-color: #FAE3D9 !important;}
+.one-bg {background-color: #1fcecb !important;}
+
+img {width: 200px !important; height: 200px !important; object-fit:cover !important;}
+.small-img {width: 50px !important; height: 50px !important; object-fit:cover !important;}
+
+.font-tiny {font-size: 10px !important;}
+.font-smaller {font-size: 13px !important;}
+
+.alert { text-align: center; font-family: 'Bebas Neue', cursive; width: 50%; margin: auto auto;}
+
+.btn:focus,.btn:active {outline: none !important;box-shadow: none;}
+
+</style>
+</head>
+<body>
+    {% load custom_tags %}
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark bebas-neue">
+        <div class="container-fluid">
+            <a class="navbar-brand " href="{% url 'ttfjobs:home' %}"><span class="one">TTF</span><span class="two">jobs</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link {% block home %}{% endblock %}" href="{% url 'ttfjobs:home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block features %}{% endblock %}" href="{% url 'ttfjobs:features' %}">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block pricing %}{% endblock %}" href="{% url 'ttfjobs:pricing' %}">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block demo %}{% endblock %}" href="{% url 'ttfjobs:demo' %}">Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block about %}{% endblock %}" href="{% url 'ttfjobs:about' %}">About</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        {% if request.user|is_employer %}
+                            <li class="nav-item">
+                                <a class="nav-link {% block employer_tests %}{% endblock %}" href="{% url 'ttfjobs:employer_tests' %}">Tests</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% block employer_courses %}{% endblock %}" href="{% url 'ttfjobs:employer_courses' %}">Courses</a>
+                            </li>
+                            <li class="nav-item">
+                            <li class="nav-item">
+                                <a class="nav-link {% block employer_candidates %}{% endblock %}" href="{% url 'ttfjobs:employer_candidates' %}">Candidates</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link {% block employer_chat %}{% endblock %}" href="{% url 'ttfjobs:employer_chat' %}">Chat {% if unread_messages %}<span class="badge bg-danger">{{ unread_messages }}</span>{% endif %}</a>
+                            <li class="nav-item">
+                                <a class="nav-link {% block employer_referral %}{% endblock %}" href="{% url 'ttfjobs:employer_referral' %}">Referral</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% block employer_profile %}{% endblock %}" href="{% url 'ttfjobs:employer_profile' %}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% block employer_dashboard %}{% endblock %}" href="{% url 'ttfjobs:employer_dashboard' %}">Dashboard</a>
+                            </li>
+                            </li>
+                        {% endif %}
+                        {% if request.user|is_candidate %}
+                                <a class="nav-link {% block candidate_achievements %}{% endblock %}" href="{% url 'ttfjobs:candidate_achievements' %}">Achievements</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% block candidate_tests %}{% endblock %}" href="{% url 'ttfjobs:candidate_tests' %}">Tests</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% block candidate_courses %}{% endblock %}" href="{% url 'ttfjobs:candidate_courses' %}">Courses</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link {% block candidate_chat %}{% endblock %}" href="{% url 'ttfjobs:candidate_chat' %}">Chat {% if unread_messages %}<span class="badge bg-danger">{{ unread_messages }}</span>{% endif %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% block candidate_profile %}{% endblock %}" href="{% url 'ttfjobs:candidate_profile' %}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% block candidate_dashboard %}{% endblock %}" href="{% url 'ttfjobs:candidate_dashboard' %}">Dashboard</a>
+                            </li>
+                        {% endif %}
+                        <span class="navbar-text">|</span>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'ttfjobs:all_logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% block employer %}{% endblock %}" href="{% url 'ttfjobs:employer' %}">Employer</a>
+                        </li>
+                        <span class="navbar-text">|</span>
+                        <li class="nav-item">
+                            <a class="nav-link {% block candidate %}{% endblock %}" href="{% url 'ttfjobs:candidate' %}">Candidate</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+      {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js" integrity="sha512-HfRdzrvve5p31VKjxBhIaDhBqreRXt4SX3i3Iv7bhuoeJY47gJtFTRWKUpjk8RUkLtKZUhf87ONcKONAROhvIw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.3/pretty-checkbox.min.css" integrity="sha512-kz4Ae66pquz4nVE5ytJyKfPDkQyHSggaDtT1v8oLfOd8bB+ZgZXNLaxex99MNu4fdCsWmi58mhLtfGk5RgfcOw==" crossorigin="anonymous" />
+
+    <script>
+        $(":file").filestyle({buttonBefore: true, text: "Choose Picture"});
+        $(".form-check").addClass("pretty pretty p-default p-round p-thick");
+        $(".form-check-label").wrap("<div class='state'></div>");
+        $(".state").addClass("p-success");
+        $(".form-check").removeClass("form-check");
+    </script>
+    {% block javascript %}
+    {% endblock javascript %}
+</body>
+
+</html>

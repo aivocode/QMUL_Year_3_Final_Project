@@ -1,0 +1,60 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Tests{% endblock %}
+{% block employer_tests %}active{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Tests</h1>
+    <div class="small text-muted mb-5">View or select to add/edit training courses below.</div>
+</div>
+
+<div class="col text-center mb-4">
+    <a class="btn btn-dark" href="{% url 'ttfjobs:employer_tests_create' %}">Create</a>
+</div>
+
+{% if tests %}
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 three-bg border-0 mb-4">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Created tests</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-smaller text-center">
+                            <td>Title</td>
+                            <td>Short Description</td>
+                            <td>Interests</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for test in tests %}
+                        <tr class="bebas-neue text-center">
+                            <td class="border-0">{{ test.title }}</td>
+                            <td class="border-0">{{ test.short_description }}</td>
+                            <td class="border-0">
+                                {% if test.interests.exists %}
+                                    {{ test.interests.all|join:", " }}
+                                {% else %}
+                                    None
+                                {% endif %}
+                            </td>
+                            <td class="border-0"><a class="btn btn-dark btn-sm" href="{% url 'ttfjobs:employer_tests_edit' test.pk %}">Edit</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center mb-0" role="alert">No tests created.</div>
+</div>
+{% endif %}
+
+{% endblock %}

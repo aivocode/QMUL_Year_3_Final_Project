@@ -1,0 +1,46 @@
+{% extends 'guest/base.html' %}
+{% block title %}Candidate Chat Message View{% endblock %}
+{% block candidate_chat %}active{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Message</h1>
+    <div class="small text-muted mb-5">View chat message from {{ chat_message.sender.first_name }} {{ chat_message.sender.last_name }}.</div>
+</div>
+
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Subject:&nbsp;{{ chat_message.subject }}</small>
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div class="card-body">
+                    {{ chat_message.message }}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <small class="text-muted bebas-neue">Received at:&nbsp;{{ chat_message.created_at }}</small>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card w-50 bg-primary bg-login p-0 m-1 border-0">
+        <div class="card-body">
+            <form class="form crispy-form" method="POST" action=".">
+                <div class="text-sm">
+                {{ form|crispy }}
+                {% csrf_token %}
+                </div>
+                <input class="btn btn-dark" type="submit" value="Reply">
+                <a class="btn btn-dark" href="{% url 'ttfjobs:candidate_chat' %}" role="button">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

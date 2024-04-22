@@ -1,0 +1,27 @@
+{% extends 'guest/base.html' %}
+{% block title %}Hide Message{% endblock %}
+{% block employer_chat %}active{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Hide</h1>
+    <div class="small text-muted mb-5">Are you sure you want to hide message with subject "{{ message.subject }}" in archive?</div>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="col text-center mb-4">
+        <input class="btn btn-dark" type="submit" value="Confirm">
+        {% if request.user|is_employer %}
+            <a class="btn btn-dark" href="{% url 'ttfjobs:employer_chat' %}" role="button">Back</a>
+        {% else %}
+            <a class="btn btn-dark" href="{% url 'ttfjobs:candidate_chat' %}" role="button">Back</a>
+        {% endif %}
+    </div> 
+</form>
+
+{% endblock %}
+

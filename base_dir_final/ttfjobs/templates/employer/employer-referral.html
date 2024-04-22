@@ -1,0 +1,56 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Referral{% endblock %}
+{% block employer_referral %}active{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Referral</h1>
+    <div class="small text-muted mb-5">Employers: manage your custom referral code below.</div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 bg-primary bg-login">
+        <div class="card-body">
+            <form class="form crispy-form" method="POST" action="{% url 'ttfjobs:employer_referral' %}">
+                {% if copy_referral %}
+                <div class="row">
+                    <div class="col">
+                        <input class="btn btn-dark btn-lg" type="button" value="Copy" onclick="copyReferral()">
+                    </div>
+                    <div class="col text-center">
+                        <div class="display-6 bebas-neue align-middle">{{referral_code}}</div>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                {% else %}
+                <div class="text-sm">
+                    {{employer_create_referral|crispy}}
+                </div>
+                <input class="btn btn-dark" type="submit" value="Save">
+                {% endif %}
+            </form>
+        </div>
+        <div class="card-footer bg-dark text-center">
+            <small class="text-muted bebas-neue" id="response">{{response}}</small>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyReferral() {
+        var innerText = "{{referral_code}}"
+        var tempTextArea = document.createElement("textarea");
+        document.body.appendChild(tempTextArea);
+        tempTextArea.value = innerText;
+        tempTextArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempTextArea);
+        $("#response").addClass("one");
+        $("#response").html("Referral code has been copied to clipboard.");
+    }
+</script>
+
+{% endblock %}

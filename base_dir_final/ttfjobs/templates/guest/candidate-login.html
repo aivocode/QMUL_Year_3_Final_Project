@@ -1,0 +1,28 @@
+{% extends 'guest/base.html' %}
+{% block title %}Candidate Login{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Login</h1>
+    <div class="small text-muted mb-5">Candidates: enter username and password below to login.</div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 bg-primary bg-login">
+        <div class="card-body">
+            <form class="form crispy-form" method="POST" action="{% url 'ttfjobs:candidate_login' %}">
+                <div class="text-sm">
+                {{authentication_form|crispy}}
+                </div>
+                <input class="btn btn-dark" type="submit" value="Login">
+            </form>
+        </div>
+        <div class="card-footer bg-dark text-center">
+            <small class="text-muted bebas-neue">No account? Register as <a class="two text-decoration-none" href="{% url 'ttfjobs:candidate_register' %}">Candidate</a>.</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Candidates Courses Assign{% endblock %}
+{% block employer_candidates %}active{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Assign</h1>
+    <div class="small text-muted mb-5">Assign courses for - {{ candidate.user.get_full_name }}</div>
+</div>
+
+
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Available courses</small>
+        </div>
+        <div class="card-body">
+            <form class="form crispy-form" method="POST" action=".">
+                <div class="text-sm">
+                    {{ form|crispy }}
+                    {% csrf_token %}
+                </div>
+                <input class="btn btn-dark" type="submit" value="Save">
+                <a class="btn btn-dark" href="{% url 'ttfjobs:employer_candidates' %}" role="button">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,29 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Candidates Test View Data{% endblock %}
+{% block employer_candidates %}active{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Data</h1>
+    <div class="small text-muted mb-5">Submitted data for - {{ submitted_test.test.title }}</div>
+</div>
+
+<div class="col text-center mb-4">
+    <a class="btn btn-dark" href="{% url 'ttfjobs:employer_candidates' %}" role="button">Back</a>
+</div>
+
+{% for item in submitted_test.get_data %}
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">{{ item.question }}</small>
+        </div>
+        <div class="card-body">
+            {{ item.answer }}
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

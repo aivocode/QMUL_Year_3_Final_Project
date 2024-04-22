@@ -1,0 +1,101 @@
+{% extends 'guest/base.html' %}
+{% block title %}Candidate Dashboard{% endblock %}
+{% block candidate_dashboard %}active{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Dashboard</h1>
+    <div class="small text-muted mb-5">Candidates: choose your activities by clicking on cards below.</div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card-group w-75">
+        <a class="nav-link card stretched-link bg-primary bg-login text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:candidate_profile' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Profile</h6>
+                </div>
+                <small class="bebas-neue text-dark">Last login:&nbsp{{last_login}}</small>
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">Manage profile.</small>
+            </div>
+        </a>
+        <a class="nav-link card stretched-link bg-primary bg-login text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:candidate_chat' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Chat</h6>
+                </div>
+                <small class="bebas-neue text-dark">Status:&nbsp
+                        {% if incoming_messages_count %}
+                            <span class="two fw-bold">{{incoming_messages_count}}</span>
+                        {% else %}
+                            No
+                        {% endif %}
+                &nbspNew messages</small>   
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">Use chat.</small>
+            </div>
+        </a>
+        <a class="nav-link card stretched-link bg-primary bg-login text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:candidate_achievements' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Achievements</h6>
+                </div>
+                <small class="bebas-neue text-dark">Status: Level&nbsp<span class="two fw-bold">{{ request.user.candidateprofile.get_level_number }}</span>&nbspreached.</small>   
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">View achievements.</small>
+            </div>
+        </a>
+        
+
+        
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card-group w-50">
+        <a class="nav-link card stretched-link bg-primary bg-register text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:candidate_courses' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Courses</h6>
+                </div>
+                <small class="bebas-neue text-dark">Status:&nbsp
+                    {% if assigned_course_count %}
+                        <span class="one fw-bold">{{assigned_course_count}}</span>
+                    {% else %}
+                        No
+                    {% endif %}
+                    &nbspAvailable courses</small>
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">View courses.</small>
+            </div>
+        </a>
+        <a class="nav-link card stretched-link bg-primary bg-register text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:candidate_tests' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Tests</h6>
+                </div>
+                <small class="bebas-neue text-dark">Status:&nbsp
+                    {% if assigned_tests_count %}
+                        <span class="one fw-bold">{{assigned_tests_count}}</span>
+                    {% else %}
+                        No
+                    {% endif %}
+                    &nbspAvailable tests</small>
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">View tests.</small>
+            </div>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

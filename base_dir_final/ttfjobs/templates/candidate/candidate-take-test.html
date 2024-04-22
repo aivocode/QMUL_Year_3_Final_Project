@@ -1,0 +1,37 @@
+{% extends 'guest/base.html' %}
+{% block title %}Candidate Take Test{% endblock %}
+{% block candidate_tests %}active{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Test</h1>
+    <div class="small text-muted mb-5">Answer the questions to complete test.</div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-75 three-bg border-0 mb-4">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Take test</small>
+        </div>
+
+        <div class="card-body">
+            <form class="form crispy-form" method="POST" action=".">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="text-sm">
+                            {{ form|crispy }}
+                            {% csrf_token %}
+                        </div>
+                    </div>
+                </div>
+                <input class="btn btn-dark" type="submit" value="Finish">
+                <a class="btn btn-dark" href="{% url 'ttfjobs:candidate_tests' %}" role="button">Leave</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

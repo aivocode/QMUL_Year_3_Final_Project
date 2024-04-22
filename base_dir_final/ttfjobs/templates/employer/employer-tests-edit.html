@@ -1,0 +1,77 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Tests Edit{% endblock %}
+{% block employer_tests %}active{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="text-center">
+    <h1 class="display-1">Edit</h1>
+    <div class="small text-muted mb-5">Edit test questions and answers.</div>
+</div>
+
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-body pt-1">
+            <form class="form" method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="row justify-content-md-center mb-1">
+                        <div class="card p-0">
+
+                            <div class="card-header text-center">
+                                <small class="bebas-neue">Test details</small>
+                            </div>
+
+                            <div class="card-body crispy-form">
+                                {{ form|crispy }}
+                            </div>
+                              
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="row justify-content-md-center mb-4">
+                        <div class="card p-0">
+                            <div class="card-header text-center">
+                                <small class="bebas-neue">Questions and answers</small>
+                            </div>
+
+                            <div class="card-body crispy-form pt-1 pb-0">
+                                {{ questions_formset.management_form }}
+                                {% for question_form in questions_formset %}
+                                <div class="row justify-content-md-center mb-1">
+                                    <div class="card three-bg">
+                                        <div class="card-body">
+                                            {{ question_form|crispy}}
+
+                                            {% if question_form.nested %}
+                                                {{ question_form.nested.management_form }}
+                                                {{ question_form.nested.non_form_errors }}
+                                                
+                                                <label class="form-label">Answers*</label>
+                                                {% for nested_form in question_form.nested.forms %}
+                                                    <div class="card mb-2 pb-0">
+                                                        <div class="card-body pb-0">
+                                                            {{ nested_form|crispy }}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <button class="btn btn-dark" type="submit">Save</button>
+                <a class="btn btn-dark" href="{% url 'ttfjobs:employer_tests' %}" role="button">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

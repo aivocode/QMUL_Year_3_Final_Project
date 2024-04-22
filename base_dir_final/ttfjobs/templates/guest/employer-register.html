@@ -1,0 +1,29 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Register{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Register</h1>
+    <div class="small text-muted mb-5">Employers: enter your details below to register.</div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 bg-primary bg-register">
+        <div class="card-body">
+            <form class="form crispy-form" enctype="multipart/form-data" method="POST" action="{% url 'ttfjobs:employer_register' %}">
+                <div class="text-sm">
+                {{user_creation_form_extended|crispy}}
+                {{employer_profile_form|crispy}}
+                </div>
+                <input class="btn btn-dark" type="submit" value="Register">
+            </form>
+        </div>
+        <div class="card-footer bg-dark text-center">
+            <small class="text-muted bebas-neue">Already have an account? Login as <a class="one text-decoration-none" href="{% url 'ttfjobs:employer_login' %}">Employer</a>.</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

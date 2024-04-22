@@ -1,0 +1,94 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Profile{% endblock %}
+{% block employer_profile %}active{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Profile</h1>
+    <div class="small text-muted mb-5">Employers: view or click to change your profile details below.</div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card p-0 w-50 three-bg">
+        <div class="card-body">
+            <div class="row justify-content-md-center m-0">
+                <img class="p-0 rounded" src="{{employer_profile.picture.url}}" />
+            </div>
+            <a title="Edit Profile" class="btn btn-sm bg-dark border-0 rounded-0 rounded-top edit" href="{% url 'ttfjobs:employer_profile_edit' %}">
+                <i class="fas fa-pen-square fa-2x one"></i>
+            </a>
+            <span class="bebas-neue">Edit</span>
+            <div class="row justify-content-md-center m-0">
+                <div class="bg-dark rounded-0 rounded-bottom rounded-end">
+                    <div class="bebas-neue pt-3">
+                        <div class="row m-0">
+                            <div class="col p-0">
+                                <div class="row m-0">
+                                    <div class="col p-0">
+                                        <h4 class="text-end one">Username:&nbsp</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col p-0">
+                                <h6 class="two">{{user.username}}</h6>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col p-0">
+                                <div class="row m-0">
+                                    <div class="col p-0">
+                                        <h4 class="text-end one">First Name:&nbsp</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col p-0">
+                                <h6 class="two">{{user.first_name}}</h6>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col p-0">
+                                <div class="row m-0">
+                                    <div class="col p-0">
+                                        <h4 class="text-end one">Last Name:&nbsp</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col p-0">
+                                <h6 class="two">{{user.last_name}}</h6>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col p-0">
+                                <div class="row m-0">
+                                    <div class="col p-0">
+                                        <h4 class="text-end one">Email:&nbsp</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col p-0">
+                                <h6 class="two">{{user.email}}</h6>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col p-0">
+                                <div class="row m-0">
+                                    <div class="col p-0">
+                                        <h4 class="text-end one">Company Name:&nbsp</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col p-0">
+                                <h6 class="two">{{employer_profile.company_name}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

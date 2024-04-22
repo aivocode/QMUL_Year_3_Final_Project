@@ -1,0 +1,86 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Candidates Courses Results{% endblock %}
+{% block employer_candidates %}active{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Results</h1>
+    <div class="small text-muted mb-5">View courses results from - {{ candidate.user.get_full_name }}</div>
+</div>
+
+<div class="col text-center mb-4">
+    <a class="btn btn-dark" href="{% url 'ttfjobs:employer_candidates' %}" role="button">Back</a>
+</div>
+
+{% if submitted_courses %}
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Submitted courses</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-tiny">
+                            <td>Title</td>
+                            <td>Description</td>
+                            <td>Done at</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in submitted_courses %}
+                        <tr class="bebas-neue font-smaller">
+                            <td class="border-0">{{ course.course.title }}</td>
+                            <td class="border-0">{{ course.course.short_description }}</td>
+                            <td class="border-0">{{ course.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center" role="alert">No submitted courses yet.</div>
+</div>
+{% endif %}
+
+{% if awaiting_courses %}
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-50 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Pending courses</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-tiny">
+                            <td>Title</td>
+                            <td>Description</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in awaiting_courses %}
+                        <tr class="bebas-neue font-smaller">
+                            <td class="border-0">{{ course.title }}</td>
+                            <td class="border-0">{{ course.short_description }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center" role="alert">No pending courses yet.</div>
+</div>
+{% endif %}
+
+{% endblock %}

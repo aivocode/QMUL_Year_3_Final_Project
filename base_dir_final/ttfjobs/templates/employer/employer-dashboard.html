@@ -1,0 +1,126 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Dashboard{% endblock %}
+{% block employer_dashboard %}active{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Dashboard</h1>
+    <div class="small text-muted mb-5">Employers: choose your activities by clicking on cards below.</div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card-group w-50">
+        <a class="nav-link card stretched-link bg-primary bg-login text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:employer_profile' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Profile</h6>
+                </div>
+                <small class="bebas-neue text-dark">Last login:&nbsp{{last_login}}</small>
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">Manage profile.</small>
+            </div>
+        </a>
+
+        <a class="nav-link card stretched-link bg-primary bg-login text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:employer_referral' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Referral</h6>
+                </div>
+                <small class="bebas-neue text-dark">Status:&nbsp{{referral_status}}</small>
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">Manage referral code.</small>
+            </div>
+        </a>
+
+        <a class="nav-link card stretched-link bg-primary bg-register text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:employer_courses' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Courses</h6>
+                </div>
+                <small class="bebas-neue text-dark">Status:&nbsp
+                    {% if course_count %}
+                        <span class="one fw-bold">{{course_count}}</span>
+                    {% else %}
+                        No
+                    {% endif %}
+                &nbspCreated courses</small>
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">Manage courses.</small>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="card-group w-50">
+        <a class="nav-link card stretched-link bg-primary bg-login text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:employer_chat' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Chat</h6>
+                </div>
+                <small class="bebas-neue text-dark">Status:&nbsp
+                    {% if candidates %}
+                        {% for candidate in candidates %}
+                            {% new_messages_count request.user candidate.user as messages_count %}
+                            {% if messages_count %}
+                                <span class="two fw-bold">{{messages_count}}</span>
+                            {% else %}
+                                No
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        No
+                    {% endif %}
+                &nbspNew messages</small>   
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">Use chat.</small>
+            </div>
+        </a>
+
+        <a class="nav-link card stretched-link bg-primary bg-register text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:employer_tests' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Tests</h6>
+                </div>
+                <small class="bebas-neue text-dark">Status:&nbsp
+                    {% if tests_count %}
+                        <span class="one fw-bold">{{tests_count}}</span>
+                    {% else %}
+                        No
+                    {% endif %}
+                &nbspCreated tests</small>
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">Manage tests.</small>
+            </div>
+        </a>
+
+        <a class="nav-link card stretched-link bg-primary bg-register text-white text-decoration-none p-0 m-1 border-0" href="{% url 'ttfjobs:employer_candidates' %}">
+            <div class="card-body row pb-5">
+                <div class="col">
+                    <h1 class="display-6 bebas-neue text-dark">Candidates</h6>
+                </div>
+                <small class="bebas-neue text-dark">Status:&nbsp
+                    {% if candidates %}
+                        <span class="one fw-bold">{{candidates.count}}</span>
+                    {% else %}
+                        No
+                    {% endif %}
+                &nbspInvited candidates</small>
+            </div>
+            <div class="card-footer bg-dark">
+                <small class="text-muted bebas-neue">Manage candidates.</small>
+            </div>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

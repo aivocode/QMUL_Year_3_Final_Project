@@ -1,0 +1,37 @@
+[
+    {
+        "model": "ttfjobs.interests",
+        "pk": 1,
+        "fields": {
+            "option": "Cashier"
+        }
+    },
+    {
+        "model": "ttfjobs.interests",
+        "pk": 2,
+        "fields": {
+            "option": "Cleaner"
+        }
+    },
+    {
+        "model": "ttfjobs.interests",
+        "pk": 3,
+        "fields": {
+            "option": "Customer Assistant"
+        }
+    },
+    {
+        "model": "ttfjobs.interests",
+        "pk": 4,
+        "fields": {
+            "option": "Kitchen Staff"
+        }
+    },
+    {
+        "model": "ttfjobs.interests",
+        "pk": 5,
+        "fields": {
+            "option": "Stock Assistant"
+        }
+    }
+]

@@ -1,0 +1,77 @@
+{% extends 'guest/base.html' %}
+{% block title %}Employer Candidates{% endblock %}
+{% block employer_candidates %}active{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="text-center">
+    <h1 class="display-1">Candidates</h1>
+    <div class="small text-muted mb-5">View candidates results and assign to courses/tests below.</div>
+</div>
+
+{% if candidates %}
+<div class="row justify-content-md-center mb-4">
+    <div class="card p-0 w-75 three-bg border-0">
+        <div class="card-header bg-dark text-center">
+            <small class="one bebas-neue">Candidates</small>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="bebas-neue font-tiny">
+                            <td>Picture</td>
+                            <td>First&nbsp;name</td>
+                            <td>Last&nbsp;name</td>
+                            <td>Email</td>
+                            <td>Interests</td>
+                            <td>Courses assigned</td>
+                            <td>Tests assigned</td>
+                            <td>Action course</td>
+                            <td>Action course</td>
+                            <td>Action test</td>
+                            <td>Action test</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for candidate in candidates %}
+                        <tr class="bebas-neue font-smaller">
+                            <td class="border-0"><img class="small-img rounded" src="{{candidate.picture.url}}" /></td>
+                            <td class="border-0">{{ candidate.user.first_name }}</td>
+                            <td class="border-0">{{ candidate.user.last_name }}</td>
+                            <td class="border-0">{{ candidate.user.email }}</td>
+                            <td class="border-0">{{ candidate.interests.all|join:", " }}</td>
+                            <td class="border-0">
+                                {% if candidate.courses_assigned.exists %}
+                                    {{ candidate.courses_assigned.all|join:", " }}
+                                {% else %}
+                                    None
+                                {% endif %}
+                            </td>
+                            <td class="border-0">
+                                {% if candidate.tests_assigned.exists %}
+                                    {{ candidate.tests_assigned.all|join:", " }}
+                                {% else %}
+                                    None
+                                {% endif %}
+                            </td>
+                            <td class="border-0"><a href="{% url 'ttfjobs:employer_courses_assignment' candidate.pk %}" class="btn btn-dark btn-sm">Assign</a></td>
+                            <td class="border-0"><a href="{% url 'ttfjobs:employer_courses_results' candidate.pk %}" class="btn btn-dark btn-sm">View</a></td>
+                            <td class="border-0"><a href="{% url 'ttfjobs:employer_tests_assignment' candidate.pk %}" class="btn btn-dark btn-sm">Assign</a></td>
+                            <td class="border-0"><a href="{% url 'ttfjobs:employer_test_results' candidate.pk %}" class="btn btn-dark btn-sm">View</a></td> 
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-md-center mb-4">
+    <div class="alert alert-info bebas-neue w-25 text-center" role="alert">No assigned candidates yet.</div>
+</div>
+{% endif %}
+
+
+{% endblock %}
